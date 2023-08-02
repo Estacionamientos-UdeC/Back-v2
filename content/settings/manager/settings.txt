@@ -1,0 +1,18 @@
+FREQUENCY: 5
+
+EMPTY_SPACES: 0
+TOTAL_SPACES: 100
+
+DETECTOR: /home/x/Desk/FSW/Back/content/settings/detector/settings.txt
+
+CAMERA_NAMES: 4
+	camera_1
+	camera_2
+	camera_3
+	camera_4
+
+CAMERA_SOURCES: 4
+	/home/x/Desk/FSW/Back/content/cameras/camera_1.png
+	/home/x/Desk/FSW/Back/content/cameras/camera_2.png
+	/home/x/Desk/FSW/Back/content/cameras/camera_3.png
+	/home/x/Desk/FSW/Back/content/cameras/camera_4.png

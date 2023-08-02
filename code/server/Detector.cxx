@@ -1,13 +1,31 @@
+#include "Scanner.hxx"
 #include "Detector.hxx"
 
 #include <opencv2/imgcodecs.hpp>
 
-Detector::Detector(const float minScore, const float minTrust, const string& network) : minScore(minScore), minTrust(minTrust)
+Detector::Detector()
 {
-	this -> network = cvDNN::readNet(network);
 }
 
-vector<BBox> Detector::detect(const vector<uInt8>& image, const vector<string>& typeNames)
+Detector::Detector(const string& settings)
+{
+	Scanner scanner(settings);
+	
+	scanner.scan("MIN_SCORE:", this -> minScore);
+	scanner.scan("MIN_TRUST:", this -> minTrust);
+	
+	{
+		string network;
+		
+		scanner.scan("NETWORK:", network);
+		
+		this -> network = cvDNN::readNet(network);
+	}
+	
+	scanner.scan("TAGS:", this -> tags);
+}
+
+vector<BBox> Detector::detect(const vector<uInt8>& image)
 {
 	const int IMAGE_W = 640;
 	const int IMAGE_H = 640;
@@ -16,7 +34,7 @@ vector<BBox> Detector::detect(const vector<uInt8>& image, const vector<string>& 
 	
 	cv::Mat imageMatrix = cv::imdecode(image, cv::IMREAD_UNCHANGED);
 	
-	// Section 1:
+	/* ----- */
 	
 	cv::Mat inferences;
 	{
@@ -30,11 +48,11 @@ vector<BBox> Detector::detect(const vector<uInt8>& image, const vector<string>& 
 		inferences = results[0].reshape(0, {results[0].size[1], results[0].size[2]});
 	}
 	
-	// Section 2:
+	/* ----- */
 	
 	vector<BBox> detections;
 	{
-		vector<int> typeIDs;
+		vector<int> tagIDs;
 		vector<float> trusts;
 		
 		vector<cv::Rect> boxes;
@@ -48,7 +66,7 @@ vector<BBox> Detector::detect(const vector<uInt8>& image, const vector<string>& 
 				
 				if(trust >= this -> minTrust)
 				{
-					int typeID;
+					int tagID;
 					double score;
 					{
 						cv::Mat scores = inferences(cv::Range(row, row + 1), cv::Range(5, inferences.cols));
@@ -56,13 +74,13 @@ vector<BBox> Detector::detect(const vector<uInt8>& image, const vector<string>& 
 						
 						cv::minMaxLoc(scores, 0, &score, 0, &ID);
 						
-						typeID = ID.x;
+						tagID = ID.x;
 					}
 					
 					if(score >= this -> minScore)
 					{
 						trusts.push_back(trust);
-						typeIDs.push_back(typeID);
+						tagIDs.push_back(tagID);
 						
 						float x = inferences.at<float>(row, 0); // Box center x (in BLOB image coordinates)
 						float y = inferences.at<float>(row, 1); // Box center y (in BLOB image coordinates)
@@ -84,6 +102,8 @@ vector<BBox> Detector::detect(const vector<uInt8>& image, const vector<string>& 
 			}
 		}
 		
+		/* ----- */
+		
 		vector<int> correctBoxesIDs;
 		
 		cvDNN::NMSBoxes(boxes, trusts, 0, NMS_THRESHOLD, correctBoxesIDs);
@@ -98,9 +118,9 @@ vector<BBox> Detector::detect(const vector<uInt8>& image, const vector<string>& 
 			int x = box.x + (w / 2.0);
 			int y = box.y + (h / 2.0);
 			
-			string type = typeNames[typeIDs[ID]];
+			string tag = this -> tags[tagIDs[ID]];
 			
-			detections.push_back({x, y, w, h, type});
+			detections.push_back({x, y, w, h, tag});
 		}
 	}
 	

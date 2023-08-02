@@ -15,15 +15,16 @@ struct BBox
 	int w;
 	int h;
 	
-	string type;
+	string tag;
 };
 
 class Detector
 {
 	public:
-		Detector(const float minScore, const float minTrust, const string& network);
+		Detector();
+		Detector(const string& settings);
 		
-		vector<BBox> detect(const vector<uInt8>& image, const vector<string>& typeNames);
+		vector<BBox> detect(const vector<uInt8>& image);
 		
 		inline void setMinScore(const float minScore) { this -> minScore = minScore; }
 		inline void setMinTrust(const float minTrust) { this -> minTrust = minTrust; }
@@ -36,6 +37,8 @@ class Detector
 		float minTrust;
 		
 		cvDNN::Net network;
+		
+		vector<string> tags;
 };
 
 #endif

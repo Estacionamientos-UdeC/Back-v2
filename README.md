@@ -2,7 +2,7 @@
 
 ## Dependencias
 
-1. C++ STL
+1. C++20
 2. OpenCV
 
 ### Sobre OpenCV
@@ -20,8 +20,8 @@ Si usan Arch Linux hay un paquete llamado "opencv" y según recuerdo también ex
 	* `test`: Código temporal para probar el funcionamiento de versiones preliminares y/o funcionalidades específicas de la aplicacion pero que no serán en sí mismas parte del resultado final.
 
 * `content`: Todo el contenido que será accesado desde el código del proyecto.
-	* `images`: Imágenes que deben ser procesadas por el servidor.
-	* `labels`: Etiquetas de los objetos en los datasets.
+	* `cameras`: Imágenes de las cámaras que deben ser procesadas por el servidor.
 	* `models`: Modelos de YOLO con formato ONNX que serán usados para procesar las imágenes.
+	* `settings`: Archivos de configuración para el servidor.
 
 * `exec`: Ejecutables y archivos de compilación del proyecto.

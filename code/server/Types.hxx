@@ -24,13 +24,13 @@ using uInt64 = uint64_t;
 
 using string = std::string;
 
+template<typename T> using set = std::set<T>;
 template<typename T> using queue = std::queue<T>;
 template<typename T> using stack = std::stack<T>;
 template<typename T> using vector = std::vector<T>;
 
 template<typename T, uInt64 S> using array = std::array<T, S>;
 
-template<typename T1, typename T2> using set = std::set<T1, T2>;
 template<typename T1, typename T2> using map = std::map<T1, T2>;
 
 template<typename T> using uPointer = std::unique_ptr<T>;
