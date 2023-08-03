@@ -17,7 +17,6 @@ Si usan Arch Linux hay un paquete llamado "opencv" y según recuerdo también ex
 * `code`: En esta carpeta va todo el código del proyecto.
 	* `API`: Código que se encarga de recibir solicitudes y enviar información del servidor a los clientes.
 	* `server`: Código que se encarga de manejar y recopilar información sobre el estado del estacionamiento.
-	* `test`: Código temporal para probar el funcionamiento de versiones preliminares y/o funcionalidades específicas de la aplicacion pero que no serán en sí mismas parte del resultado final.
 
 * `content`: Todo el contenido que será accesado desde el código del proyecto.
 	* `cameras`: Imágenes de las cámaras que deben ser procesadas por el servidor.

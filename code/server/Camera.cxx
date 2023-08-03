@@ -7,11 +7,6 @@ Camera::Camera(const string& name, const string& source) : name(name), source(so
 {
 }
 
-vector<uInt8> Camera::getImage()
-{
-	return this -> currentImage;
-}
-
 vector<uInt8> Camera::scanImage()
 {
 	vector<uInt8> newImage;

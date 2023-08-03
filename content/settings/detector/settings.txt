@@ -1,7 +1,7 @@
 MIN_SCORE: 0.5
 MIN_TRUST: 0.5
 
-NETWORK: /home/x/Desk/FSW/Back/content/models/YOLOv5_M.onnx
+NETWORK: ./content/models/YOLOv5_M.onnx
 
 TAGS: 80
 	person

@@ -19,7 +19,7 @@ class Scanner
 			this -> scanner >> var;
 		}
 		
-		inline void scan(const string& pattern, vector<auto>& vars)
+		inline void scan(const string& pattern, vector<string>& vars)
 		{
 			this -> find(pattern);
 			
@@ -28,14 +28,11 @@ class Scanner
 			
 			vars.resize(size);
 			
-			for(auto& var : vars)
+			for(string& var : vars)
 			{
 				this -> scanner.ignore(1e3, '\t');
 				
-				string line;
-				getline(this -> scanner, line);
-				
-				std::stringstream(line) >> std::noskipws >> var;
+				getline(this -> scanner, var);
 			}
 		}
 	

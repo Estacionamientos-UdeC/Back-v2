@@ -4,6 +4,7 @@
 #include <chrono>
 
 // {
+#include <fstream>
 #include <iostream>
 // }
 
@@ -70,6 +71,10 @@ void Manager::count()
 	
 	for(Camera& camera : this -> cameras)
 	{
+		// {
+		std::cout << camera.getName() << ": ";
+		// }
+		
 		vector<BBox> detections = this -> detector.detect(camera.scanImage());
 		
 		for(const BBox& detection : detections)
@@ -89,4 +94,10 @@ void Manager::count()
 	
 	this -> emptySpaces = this -> totalSpaces;
 	this -> emptySpaces -= carCount;
+	
+	// {
+	std::fstream status("./content/status/status.txt");
+	
+	status << this -> emptySpaces;
+	// }
 }
